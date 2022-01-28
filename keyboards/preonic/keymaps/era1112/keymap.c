@@ -128,33 +128,33 @@ static td_tap_t twoCapsLock_tap_state = {
 void twoCapsLock_finished(qk_tap_dance_state_t* state, void* user_data) {
     twoCapsLock_tap_state.state = cur_dance(state);
     switch (twoCapsLock_tap_state.state) {
-    case TD_NONE: register_code(KC_LSFT); break;
-    case TD_UNKNOWN: register_code(KC_LSFT); break;
-    case TD_1_TAP: register_code(KC_LSFT); break;
-    case TD_1_HOLD: register_code(KC_LSFT); break;
+    case TD_NONE: register_code(KC_RSFT); break;
+    case TD_UNKNOWN: register_code(KC_RSFT); break;
+    case TD_1_TAP: register_code(KC_RSFT); break;
+    case TD_1_HOLD: register_code(KC_RSFT); break;
     case TD_2_TAP:
         register_code(KC_CAPS);
 #ifdef AUDIO_ENABLE
         PLAY_SONG(capslockToggleSound);
 #endif  // AUDIO_ENABLE
         break;
-    case TD_2_HOLD: register_code(KC_LSFT); break;      
+    case TD_2_HOLD: register_code(KC_RSFT); break;      
     }
 }
 
 void twoCapsLock_reset(qk_tap_dance_state_t* state, void* user_data) {
     switch (twoCapsLock_tap_state.state) {
-    case TD_UNKNOWN: unregister_code(KC_LSFT); break;
-    case TD_NONE: unregister_code(KC_LSFT); break;
-    case TD_1_TAP: unregister_code(KC_LSFT); break;
-    case TD_1_HOLD: unregister_code(KC_LSFT); break;
+    case TD_UNKNOWN: unregister_code(KC_RSFT); break;
+    case TD_NONE: unregister_code(KC_RSFT); break;
+    case TD_1_TAP: unregister_code(KC_RSFT); break;
+    case TD_1_HOLD: unregister_code(KC_RSFT); break;
     case TD_2_TAP:
         unregister_code(KC_CAPS);
 #ifdef AUDIO_ENABLE
         PLAY_SONG(capslockToggleSound);
 #endif  // AUDIO_ENABLE
         break;
-    case TD_2_HOLD: unregister_code(KC_LSFT); break;
+    case TD_2_HOLD: unregister_code(KC_RSFT); break;
     }
     twoCapsLock_tap_state.state = TD_NONE;
 }
@@ -327,11 +327,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT_ortho_5x12 (
         // (Non-disabled top row), uncomment and replace if you want preonic-style instead of planck-style
         // KC_MINS,            KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_6,           KC_7,           KC_8,       KC_9,       KC_0,       KC_EQL,
-		KC_NO,              KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,      KC_NO,      KC_NO,      KC_NO,
+		    KC_NO,              KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,      KC_NO,      KC_NO,      KC_NO,
         KC_TAB,             KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           KC_Y,           KC_U,           KC_I,       KC_O,       KC_P,       KC_BSPC,
         KC_ESC,             KC_A,           KC_S,           KC_D,           KC_F,           KC_G,           KC_H,           KC_J,           KC_K,       KC_L,       KC_SCLN,    KC_ENT,
         KC_LSFT,            KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,           KC_N,           KC_M,           KC_COMM,    KC_DOT,     KC_SLSH,    TD(TD_2_CAPSLOCK),
-        ENC_MODE,           KC_LCTL,        KC_LGUI,        KC_LALT,        MO(_LOWER),     KC_SPC,         KC_SPC,         MO(_RAISE),     KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT
+        ENC_MODE,           KC_LCTL,        KC_LGUI,        KC_LALT,        MO(_LOWER),     KC_SPC,         MO(_RAISE),     KC_RCTRL,       KC_LEFT,    KC_DOWN,    KC_UP,      KC_RGHT
     ),
 
     // lower key
