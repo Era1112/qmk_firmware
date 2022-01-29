@@ -6,4 +6,4 @@ A preonic keymap that includes:
 - sound on/off
 - toggle between planck/preonic mode
 - blink-on-keypress w/ on/off keystroke
-- beep-on-keypress w/ on/off keystroke (this has stability issues when typing fast, still trying to remediate)
+- beep-on-keypress w/ on/off keystroke 
