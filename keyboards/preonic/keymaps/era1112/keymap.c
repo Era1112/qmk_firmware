@@ -23,10 +23,10 @@ void keyboard_post_init_user(void) {
 //-----------------------------------//
 enum preonic_layers {
   _PLANCK,
-  _QWERTY,
-  _LOWER,
-  _RAISE,
-  _ADJUST,
+  _PREONIC,
+  _L,
+  _R,
+  _RL,
   _AGGR_SCROLL
 };
 
@@ -169,7 +169,7 @@ void twoCapsLock_reset(qk_tap_dance_state_t* state, void* user_data) {
 //----------- Rotary Encoder --------------//
 //----------------------------------------//
 bool encoder_update_user(uint8_t index, bool clockwise) {
-    if ( layer_state_is(_QWERTY) || layer_state_is(_PLANCK) ) {
+    if ( layer_state_is(_PREONIC) || layer_state_is(_PLANCK) ) {
         if (clockwise) {
             tap_code(KC_WH_U);
         } else {
@@ -188,14 +188,14 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             }
         }
     }
-    else if (layer_state_is(_LOWER)) {
+    else if (layer_state_is(_L)) {
         if (clockwise) {
             tap_code16(S(KC_F3));
         } else {
             tap_code(KC_F3);
         }
     }
-    else if (layer_state_is(_RAISE)) {
+    else if (layer_state_is(_R)) {
         if (clockwise) {
             tap_code16(C(KC_Z));
         } else {
@@ -284,11 +284,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
         }
 
     // Toggle planck/preonic mode and play sound
-    case TG(_QWERTY):
+    case TG(_PREONIC):
 
         // If pressed
         if (record->event.pressed) {
-            if ( layer_state_is(_QWERTY) )
+            if ( layer_state_is(_PREONIC) )
         #ifdef AUDIO_ENABLE
             PLAY_SONG(planckModeSound);
         #endif  // AUDIO_ENABLE
@@ -337,12 +337,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     // Encoder Click
     case ENC_CLICK:
         if (record->event.pressed) {
-            if ( layer_state_is(_QWERTY) || layer_state_is(_PLANCK) ) {
+            if ( layer_state_is(_PREONIC) || layer_state_is(_PLANCK) ) {
                 tap_code(KC_BTN1);
                 return false;
-            } else if (layer_state_is(_LOWER)) {
+            } else if (layer_state_is(_L)) {
                 return false;
-            } else if (layer_state_is(_RAISE)) {
+            } else if (layer_state_is(_R)) {
                 return false;
             }
         }
@@ -385,43 +385,43 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,             KC_Q,           KC_W,           KC_E,           KC_R,           KC_T,           KC_Y,           KC_U,           KC_I,       KC_O,       KC_P,           KC_BSPC,
         KC_ESC,             KC_A,           KC_S,           KC_D,           KC_F,           KC_G,           KC_H,           KC_J,           KC_K,       KC_L,       KC_SCLN,        KC_ENT,
         KC_LSFT,            KC_Z,           KC_X,           KC_C,           KC_V,           KC_B,           KC_N,           KC_M,           KC_COMM,    KC_DOT,     KC_SLSH,        TD(TD_2_CAPSLOCK),
-        ENC_CLICK,          KC_LGUI,        KC_LCTL,        KC_LALT,        MO(_LOWER),     KC_SPC,         MO(_RAISE),     KC_RCTRL,       KC_LEFT,    KC_DOWN,    KC_UP,          KC_RGHT
+        ENC_CLICK,          KC_LGUI,        KC_LCTL,        KC_LALT,        MO(_L),         KC_SPC,         MO(_R),         KC_RCTRL,       KC_LEFT,    KC_DOWN,    KC_UP,          KC_RGHT
     ),
 
     // enabled top keys, toggled in adjust layer
-    [_QWERTY] = LAYOUT_ortho_5x12(
+    [_PREONIC] = LAYOUT_ortho_5x12(
         KC_MINS,            KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_6,           KC_7,           KC_8,       KC_9,       KC_0,           KC_EQL,
         KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
         KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
         KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
-        KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        MO(_LOWER),     KC_TRNS,        MO(_RAISE),     KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS
+        KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        MO(_L),         KC_TRNS,        MO(_R),         KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS
     ),
     
     // lower key
-    [_LOWER] = LAYOUT_ortho_5x12 (
-        DYN_MACRO_PLAY1,    DYN_REC_START1, DYN_REC_STOP,   KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,
-        KC_TRNS,            KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_6,           KC_7,           KC_8,           KC_9,       KC_0,       KC_DEL,
-        KC_BSPC,            KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,          KC_F6,          KC_QUOT,        KC_GRV,         KC_LCBR,    KC_RCBR,    KC_TRNS,
-        KC_TRNS,            KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,         KC_F12,         KC_MINS,        KC_EQL,         KC_INS,     KC_BSLS,    KC_TRNS,
-        KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        MO(_ADJUST),    KC_TRNS,        KC_HOME,        KC_PGDN,    KC_PGUP,    KC_END
+    [_L] = LAYOUT_ortho_5x12 (
+        DYN_MACRO_PLAY1,    DYN_REC_START1, DYN_REC_STOP,   KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
+        KC_TRNS,            KC_1,           KC_2,           KC_3,           KC_4,           KC_5,           KC_6,           KC_7,           KC_8,       KC_9,       KC_0,           KC_DEL,
+        KC_BSPC,            KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,          KC_F6,          KC_QUOT,        KC_GRV,     KC_LCBR,    KC_RCBR,        KC_TRNS,
+        KC_TRNS,            KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,         KC_F12,         KC_MINS,        KC_PLUS,    KC_EQL,     KC_BSLS,        KC_TRNS,
+        KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        MO(_RL),        KC_TRNS,        KC_HOME,    KC_PGDN,    KC_PGUP,        KC_END
     ),
 
     // raise key
-    [_RAISE] = LAYOUT_ortho_5x12 (
-        DYN_MACRO_PLAY1,    DYN_REC_START1, DYN_REC_STOP,   KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,
-        KC_TRNS,            KC_EXLM,        KC_AT,          KC_HASH,        KC_DLR,         KC_PERC,        KC_CIRC,        KC_AMPR,        KC_ASTR,        KC_LPRN,    KC_RPRN,    KC_DEL,
-        KC_DEL,             KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,          KC_F6,          KC_DQUO,        KC_TILD,        KC_LBRC,    KC_RBRC,    KC_TRNS,
-        KC_TRNS,            KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,         KC_F12,         KC_PLUS,        KC_UNDS,        KC_INS,     KC_PIPE,    KC_TRNS,
-        KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        MO(_ADJUST),    KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_MUTE,        KC_VOLD,    KC_VOLU,    KC_F24
+    [_R] = LAYOUT_ortho_5x12 (
+        DYN_MACRO_PLAY1,    DYN_REC_START1, DYN_REC_STOP,   KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
+        KC_TRNS,            KC_EXLM,        KC_AT,          KC_HASH,        KC_DLR,         KC_PERC,        KC_CIRC,        KC_AMPR,        KC_ASTR,    KC_LPRN,    KC_RPRN,        KC_DEL,
+        KC_DEL,             KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,          KC_F6,          KC_DQUO,        KC_TILD,    KC_LBRC,    KC_RBRC,        KC_TRNS,
+        KC_TRNS,            KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,         KC_F12,         KC_MINS,        KC_PLUS,    KC_UNDS,    KC_PIPE,        KC_TRNS,
+        KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        MO(_RL),        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_MUTE,    KC_VOLD,    KC_VOLU,        KC_F24
     ),
 
     // hardware adjust layer, raise+lower
-    [_ADJUST] = LAYOUT_ortho_5x12 (
-        AU_ON,              AU_OFF,          CK_ON,           CK_OFF,          KC_NO,       KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,      KC_NO,      KC_NO,
-        CU_RGBON,           CU_RGBOFF,       CU_BLNKON,       CU_BLNKOFF,      KC_NO,       KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,      KC_NO,      KC_NO,
-        TG(_QWERTY),        KC_NO,           KC_NO,           KC_NO,           KC_NO,       KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,      KC_NO,      KC_NO,
-        KC_NO,              KC_NO,           KC_NO,           KC_NO,           KC_NO,       KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,      KC_NO,      KC_NO,
-        KC_NO,              KC_NO,           KC_NO,           KC_NO,           KC_NO,       KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,      KC_NO,      KC_NO
+    [_RL] = LAYOUT_ortho_5x12 (
+        AU_ON,              AU_OFF,         CK_ON,          CK_OFF,         KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,      KC_NO,      KC_NO,          KC_NO,
+        CU_RGBON,           CU_RGBOFF,      CU_BLNKON,      CU_BLNKOFF,     KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,      KC_NO,      KC_NO,          KC_NO,
+        TG(_PREONIC),       KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,      KC_NO,      KC_NO,          KC_NO,
+        KC_NO,              KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,      KC_NO,      KC_NO,          KC_NO,
+        KC_NO,              KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,          KC_NO,      KC_NO,      KC_NO,          KC_INS
     ),
 
     // used only to flag that we want to scroll at aggressive rate
