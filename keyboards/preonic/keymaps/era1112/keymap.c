@@ -4,7 +4,7 @@
 #include QMK_KEYBOARD_H                     // Default statement
 
 #define HSV_RETRO_CONSOLE   36, 150, 255    // HSV_YELLOW = 43, 255, 255
-#define AGGRESSIVE_SCROLL_RATE 20           // Number of wheeldowns to iterate while holding the modifier to the encoder
+#define AGGRESSIVE_SCROLL_RATE 50           // Number of wheeldowns to iterate while holding the modifier to the encoder
 
 
 //----------- RGB Default Settings -----------//
@@ -394,7 +394,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
         KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
         KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS,
-        KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS
+        KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        MO(_LOWER),     KC_TRNS,        MO(_RAISE),     KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,        KC_TRNS
     ),
     
     // lower key
@@ -411,7 +411,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         DYN_MACRO_PLAY1,    DYN_REC_START1, DYN_REC_STOP,   KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_TRNS,    KC_TRNS,    KC_TRNS,
         KC_TRNS,            KC_EXLM,        KC_AT,          KC_HASH,        KC_DLR,         KC_PERC,        KC_CIRC,        KC_AMPR,        KC_ASTR,        KC_LPRN,    KC_RPRN,    KC_DEL,
         KC_DEL,             KC_F1,          KC_F2,          KC_F3,          KC_F4,          KC_F5,          KC_F6,          KC_DQUO,        KC_TILD,        KC_LBRC,    KC_RBRC,    KC_TRNS,
-        KC_TRNS,            KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,         KC_F12,         KC_UNDS,        KC_PLUS	,       KC_INS,     KC_PIPE,    KC_TRNS,
+        KC_TRNS,            KC_F7,          KC_F8,          KC_F9,          KC_F10,         KC_F11,         KC_F12,         KC_PLUS,        KC_UNDS,        KC_INS,     KC_PIPE,    KC_TRNS,
         KC_TRNS,            KC_TRNS,        KC_TRNS,        KC_TRNS,        MO(_ADJUST),    KC_TRNS,        KC_TRNS,        KC_TRNS,        KC_MUTE,        KC_VOLD,    KC_VOLU,    KC_F24
     ),
 
