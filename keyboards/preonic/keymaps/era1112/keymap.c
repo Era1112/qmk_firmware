@@ -1,4 +1,4 @@
-// Copyright 2022 Era James(@era1112)
+// Copyright 2022 Era James (@era1112)
 // SPDX - License - Identifier: GPL - 2.0 - or -later
 
 #include QMK_KEYBOARD_H                     // Default statement
